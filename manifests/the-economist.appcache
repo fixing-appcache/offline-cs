@@ -1,0 +1,21 @@
+CACHE MANIFEST
+# Version: 12520120420
+/
+/favicon.ico
+/lib/fonts/EcoHeadBd.ttf
+/lib/fonts/EcoNewBd.ttf
+/lib/fonts/EcoNewBdIt.ttf
+/lib/fonts/EcoNewIt.ttf
+/lib/fonts/EcoNewRg.ttf
+/lib/fonts/ofsnbd__.ttf
+/lib/fonts/ofsnbdi_.ttf
+/lib/fonts/ofsnbk__.ttf
+/lib/fonts/ofsnbki_.ttf
+/lib/fonts/ofsnmd__.ttf
+
+FALLBACK:
+/issues /appcache/fallbacks/issues
+/api /appcache/fallbacks/api
+
+NETWORK:
+*

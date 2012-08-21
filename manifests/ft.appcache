@@ -1,0 +1,32 @@
+CACHE MANIFEST
+# r1295
+/
+/lib/img/startupscreen/splash-logo.png
+/lib/img/startupscreen/splash-logo@2x.png
+/lib/img/mini-headshots-sprite.png
+/lib/fonts/MillerDisplay-Semibold.ttf
+/lib/fonts/Clarion.ttf
+/lib/fonts/Clarion-Bold.ttf
+/lib/fonts/BentonSansRegular.ttf
+/lib/fonts/BentonSansBold.ttf
+/lib/fonts/BentonSansBlack.ttf
+/lib/fonts/BentonSansLight.ttf
+/lib/fonts/MillerDisplay-Roman.ttf
+/lib/fonts/MillerDisplay-Bold.ttf
+/lib/fonts/Clarion-Italic.ttf
+/lib/fonts/BentonSansRegularItalic.ttf
+/lib/fonts/MillerDisplay-Semibold.woff
+/lib/fonts/Clarion.woff
+/lib/fonts/Clarion-Bold.woff
+/lib/fonts/BentonSansRegular.woff
+/lib/fonts/BentonSansBold.woff
+/lib/fonts/BentonSansBlack.woff
+/lib/fonts/BentonSansLight.woff
+/lib/fonts/MillerDisplay-Roman.woff
+/lib/fonts/MillerDisplay-Bold.woff
+/lib/fonts/Clarion-Italic.woff
+/lib/fonts/BentonSansRegularItalic.woff
+/favicon.ico
+
+NETWORK:
+*

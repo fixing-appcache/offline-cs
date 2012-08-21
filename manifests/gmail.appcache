@@ -1,0 +1,8 @@
+CACHE MANIFEST
+# AppName: superpudu
+# User: john.doe@example.com
+# Version: 1736a316925c1608
+NETWORK:
+/
+*
+//www.google.com

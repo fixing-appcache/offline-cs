@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
+  <head>
+    <meta charset='utf-8'/>
+    <title>Offline Web Application Case Studies</title>
+    <script class='remove'>
+      var respecConfig = {
+        specStatus: "unofficial",
+        shortName:  "offline-cs",
+        editors: [
+          {
+            name: "Andrew Betts",
+            company: "Financial Times",
+            companyURL: "http://labs.ft.com/"
+          },
+          {
+            name: "Tobie Langel",
+            company: "Facebook",
+            companyURL: "http://facebook.com/"
+          }
+        ],
+        edDraftURI: "http://fixing-appcache.github.com/offline-cs/index.html",
+        copyrightStart: 2012,
+        noIDLIn: true,
+        wgPatentURI: "XXX",
+        isRecTrack: false,
+        isNoTrack: true
+      };
+    </script>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
+    <script class="remove">
+      function codeBlock(doc, content) {
+          return '<pre class="example"><code>' + content + '</code></pre>';
+      }
+    </script>
+  </head>
+  <body>
+    <section id='sotd'>
+      <p>
+        Development of this document happens on <a href='https://github.com/fixing-appcache/offline-cs'>GitHub</a>.
+        Please file <a href='github.com/fixing-appcache/offline-cs/issues'>issues</a> and send
+        <a href='github.com/fixing-appcache/offline-cs'>pull requests</a> directly on GitHub.
+      </p>
+    </section>
+    <section id='abstract'>
+      <p>This document compiles case studies of web applications relying on (or having relied on) AppCache to provide offline access, handle poor connectivity, lower bandwidth consumption, and/or improve performance.</p>
+    </section>
+    <section>
+      <h2>Introduction</h2>
+      <p>The purpose of this exercise is to gather raw material out of which to derive use cases and requirements, and ultimately, specifications and implementations. The case studies were collected during a meeting of developers closely related to the development of these applications were present. They were further expanded afterwards.</p>
+      
+      <p>These case studies describe the way, as of writing, different engineering teams have decided to handle the challenge of bringing application to work offline within the constraints of the currently deployed web platforms, their own business goals, etc. They are in no way to be interpreted as best practices.</p>
+    </section>
+
+
+    <section>
+      <h1>Case Studies</h1>
+      <section>
+        <h2>Mobile Lanyrd</h2>
+
+        <p>The URL to the mobile Lanyrd website is: <a href="http://m.lanyrd.com">http://m.lanyrd.com</a>.</p>
+        <!--
+          TODO Jake to writeup Lanyrd case study
+        -->
+
+        <section id="mobile-lanyrd-manifest">
+          <h3>Example AppCache manifest file</h3>
+          <div data-include="./manifests/lanyrd.appcache" data-oninclude="codeBlock"></div>
+          <p>Notable:</p>
+          <ul>
+            <li>the comment string which combines version number and user ID,</li>
+            <li>the fallback <code>/ /</code> hack which makes every URL fallback to the root page <em>after</em> an attempt was made to retrieve fresh data from the network.</li>
+          </ul>
+        </section>
+
+        <section id="mobile-lanyrd-references">
+          <h3>References</h3>
+          <ul>
+            <li>Jake Archibald, <a href="http://www.alistapart.com/articles/application-cache-is-a-douchebag/">Application Cache is a Douchebag</a>, A List Apart, <!--
+              TODO Add pub date
+            -->.</li>
+            <li><!--
+              TODO Jake to add link to slides
+            --></li>
+            <li><!--
+              TODO Jake to add link to mobile lanyrd flowchart
+            --></li>
+          </ul>
+        </section>
+      </section><!-- END Mobile Lanyrd -->
+
+
+      <section>
+        <h2>The Economist on PlayBook</h2>
+
+        <p>The Economist HTML5 app is currently only available from <a href="http://appworld.blackberry.com/webstore/content/117808">BlackBerry App World</a> as a PlayBook app running under BlackBerry WebWorks (for the distribution channel, presence on home screen, removal of browser chrome), but since it does not use any of the WebWorks APIs, it does not rely on the WebWorks environment and can be viewed in a browser. Currently it requires JavaScript but only for layout assistance - if support for a fallback layout using only CSS were added, the app would work without JavaScript, and that remains a longer term aim. The app has the capability to render content server side and deliver combined content+structure responses partly in support of that goal, also partly for performance, and finally to enable crawler support.</p>
+
+        <p>Building the app took advantage of lessons learned from the first generation of the FT web app. Some of the challenges and experiences in building the Economist app are discussed in the FT Labs blog posts listed in <a href="#the-economist-references" class="sectionRef"></a>.</p>
+
+        <!--
+            TODO Tobie to copy paste content from wiki
+          -->
+
+        <section id="the-economist-manifest">
+          <h3>Example AppCache manifest file</h3>
+          <div data-include="./manifests/the-economist.appcache" data-oninclude="codeBlock"></div>
+          <p>Notable:</p>
+          <ul>
+            <li>there is no JavaScript cached in AppCache, all JavaScript is stored in localStorage.</li>
+          </ul>
+        </section>
+
+        <section id="the-economist-references">
+          <h3>References</h3>
+          <p>See <a href="#ft-app-references" class="sectionRef"></a>.</p>
+        </section>
+      </section><!-- END The Economist on PlayBook -->
+
+      <section>
+        <h2>Mobile Facebook</h2>
+
+        <p>The URL to the mobile Facebook website is: <a href="https://m.facebook.com">https://m.facebook.com</a>.</p>
+
+        <p>Facebook experimented with using AppCache on its mobile website to improve performance in the face of limited HTTP cache support of mobile browsers, and more specifically that of early iOS devices. This experiment was stopped in December 2011 as the results weren't showing significant performance improvements, added a lot of complexity</p>
+
+        <section id="mobile-fb-references">
+          <h3>References</h3>
+          <ul>
+            <li><!--
+              TODO Tobie to add link to Appcache article
+            --></li>
+            <li><!--
+              TODO Tobie to add link to use cases post previously published
+            --></li>
+          </ul>
+        </section>
+      </section><!-- END Mobile Facebook -->
+
+
+      <section>
+        <h2>Mobile GMail</h2>
+
+        <p>The URL to Mobile GMail is: <a href="https://m.gmail.com">https://m.gmail.com</a>.</p>
+
+        <p>GMail has very little public data - almost everything is user specific. The site is always served over SSL. There are many different versions of GMail for different platforms and client capabilities. Variation is mostly done server side. Gears <!--
+          TODO Add link to GEARS
+        --> was designed to make GMail work offline, and consequently Google has been keen to get the main features of Gears into HTML5. Offline use is only supported on the most modern browsers, where app cache is used to store the 'shell' of the application, though not the application code. Like the Economist app, the main app code is stored in localStorage. The code is initially delivered as comments inside the HTML document, so it only need be parsed when actually required. Performance targets are time to inbox and time to first message, so being able to parse and/or update only specific code is important. AppCache contains just a fallback for bootstrapping the app while offline.</p>
+
+        <p>Every view of GMail is a search, the most common and default one being a search that produces what the UI refers to as the inbox (the inbox exists in practice only in the sense that some messages are tagged with an inbox tag so that they can be found by that search)</p>
+
+        <section id="mobile-gmail-manifest">
+          <h3>Example AppCache manifest file</h3>
+          <div data-include="./manifests/gmail.appcache" data-oninclude="codeBlock"></div>
+          <p>Notable:</p>
+          <ul>
+            <li>AppCache is used strictly to cache the master entry, which contains all the bootstrapping code, inlined.</li>
+            <li>Unclear why the <code>section</code> contains anything but <code>*</code>. Is this to take advantage of undocumented features of Chromium or is it by accident?</li>
+          </ul>
+        </section>
+
+        <section id="mobile-gmail-references">
+          <h3>References</h3>
+          <ul>
+            <li><!--
+              TODO Add links to mobile gmail articles
+            --></li>
+          </ul>
+        </section>
+      </section><!-- END Mobile GMail-->
+
+
+      <section>
+        <h2>The Financial Times Web Application</h2>
+
+        <p></p>
+
+        <section id="ft-app-manifest">
+          <h3>Example AppCache manifest file</h3>
+          <div data-include="./manifests/ft.appcache" data-oninclude="codeBlock"></div>
+          <p>Notable:</p>
+          <ul>
+            <li></li>
+          </ul>
+        </section>
+
+        <section id="ft-app-references">
+          <h3>References</h3>
+          <ul>
+            <li><!--
+              TODO Add author
+            -->, <a href="http://labs.ft.com/2012/08/navigator-online-here-be-dragons/">Navigator.onLine: Here be dragons</a>, FT Labs blog, <!--
+              TODO Add pub date
+            -->.</li>
+            <li><!--
+              TODO Add author
+            -->, <a href="http://labs.ft.com/2012/08/basic-offline-html5-web-app/">Tutorial: How to make an offline HTML5 web app, FT style</a>, FT Labs blog, <!--
+              TODO Add pub date
+            -->.</li>
+            <li><!--
+              TODO Add author
+            -->, <a href="http://labs.ft.com/2012/07/prefer-online-not-so-much/">Prefer-online? Not so much</a>, FT Labs blog,<!--
+              TODO Add pub date
+            -->.</li>
+          </ul>
+        </section>
+      </section><!-- END The Financial Times App -->
+    </section>
+  </body>
+</html>

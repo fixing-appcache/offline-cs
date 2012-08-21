@@ -1,0 +1,15 @@
+CACHE MANIFEST
+# v207_9497
+http://static.lanyrd.net/mobile-web-bundle.6d059685.gz.js
+/templates.v207.js
+http://static.lanyrd.net/css/mobile-web/all.260e2b1c.gz.css
+http://static.lanyrd.net/css/mobile-web/img/sprite1@2x.ef0d2a65.png
+http://static.lanyrd.net/css/mobile-web/img/social-sprites@2x.094b231b.png
+http://static.lanyrd.net/css/mobile-web/img/person.d4982da9.png
+
+NETWORK:
+*
+
+FALLBACK:
+/mobile/ios2/ /static/json/mobile-web/api-fallback.json
+/ /
