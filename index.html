@@ -169,7 +169,9 @@
 
         <p>The URL to the mobile Facebook website is: <a href="https://m.facebook.com">https://m.facebook.com</a>.</p>
 
-        <p>Facebook experimented with using AppCache on its mobile website to improve performance in the face of limited HTTP cache support of mobile browsers, and more specifically that of early iOS devices. This experiment was stopped in December 2011 as the results weren't showing significant performance improvements, added a lot of complexity</p>
+        <p>Facebook experimented with using AppCache on its mobile website to improve performance by aggressively caching static assets in the face of limited HTTP cache support in mobile browsers, more specifically that of early iOS devices. This experiment was stopped in December 2011 as the results weren't showing significant performance improvements and added a lot of complexity. Because Facebook relies on a probabilistic packaging system to bundle resources, cached content gets invalidated on each push. Since pushes happen daily, AppCache ended up burning through too much network resources to be useful.</p>
+        
+        <p></p>
         
         <!--
            * current infrastructure has oone giant branch system, no differentiation based on clinet capability in terms of overall architecture
