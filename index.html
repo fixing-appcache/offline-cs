@@ -24,7 +24,8 @@
         noIDLIn: true,
         wgPatentURI: "XXX",
         isRecTrack: false,
-        isNoTrack: true
+        isNoTrack: true,
+        format: 'markdown'
       };
     </script>
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
@@ -36,280 +37,256 @@
   </head>
   <body>
     <section id='sotd'>
-      <p>
-        Development of this document happens on <a href='https://github.com/fixing-appcache/offline-cs'>GitHub</a>.
-        Please file <a href='github.com/fixing-appcache/offline-cs/issues'>issues</a> and send
-        <a href='github.com/fixing-appcache/offline-cs'>pull requests</a> directly on GitHub.
-      </p>
+      Development of this document happens on [GitHub](https://github.com/fixing-appcache/offline-cs).
+      Please file [issues](https://github.com/fixing-appcache/offline-cs/issues) and send [pull requests](https://github.com/fixing-appcache/offline-cs/pulls) directly on GitHub.
     </section>
     <section id='abstract'>
-      <p>This document compiles case studies of web applications relying on (or having relied on) AppCache to provide offline access, handle poor connectivity, lower bandwidth consumption, and/or improve performance.</p>
+      This document compiles case studies of web applications relying on (or having relied on) AppCache to provide offline access, handle poor connectivity, lower bandwidth consumption, and/or improve performance.
     </section>
     <section>
-      <h2>Introduction</h2>
-      <p>The purpose of this exercise is to gather raw material out of which to derive use cases and requirements, and ultimately, specifications and implementations. The case studies were collected during a meeting where developers closely related to the development of these applications were present. They were further expanded afterwards.</p>
+      Introduction
+      ============
       
-      <p>These case studies describe the way, as of writing, different engineering teams have decided to handle the challenge of bringing application to work offline within the constraints of the currently deployed web platforms, their own business goals, etc. They are in no way to be interpreted as best practices or how-tos.</p>
+      The purpose of this exercise is to gather raw material out of which to derive use cases and requirements, and ultimately, specifications and implementations. The case studies were collected during a meeting where developers closely related to the development of these applications were present. They were further expanded afterwards.
+      
+      These case studies describe the way, as of writing, different engineering teams have decided to handle the challenge of bringing application to work offline within the constraints of the currently deployed web platforms, their own business goals, etc. They are in no way to be interpreted as best practices or how-tos.
     </section>
 
 
-    <section>
-      <h1>Case Studies</h1>
-      <section>
-        <h2>Mobile Lanyrd</h2>
+    Case Studies
+    ============
+    
+    Mobile Lanyrd
+    -------------
 
-        <p>The URL to the mobile Lanyrd website is: <a href="http://m.lanyrd.com">http://m.lanyrd.com</a>. More info on the mobile app is available at <a href="http://lanyrd.com/mobile/">http://lanyrd.com/mobile/</a>.</p>
-        
-        <p>Lanyrd is a social conference directory which helps users find conferences their friends are attending, see what's currently happening at conferences, build up a speaker profile, and catch up on past conference coverage. It also helps conference organizer promote their conferences and gather analytics on conference attendees.</p>
-        <p>The mobile version of Lanyrd is designed to be used while attending a conference. Because poor network connectivity is the norm at conferences, it allows users to save specific content before attending the conference for offline use. It relies on AppCache to provide this functionality.</p>
-          
-          <p>Mobile Lanyrd uses a separate subdomain as it's feature set is different.</p>
-        <!--
-          TODO Jake to writeup Lanyrd case study
-        -->
-        
-        <!--
-            * separate domain
-            * not a retrofit, would have required a re-write anyway
-            * want to provide a subset of overall content, scored by users a-priori
-            * can't put a manifest on every page - lack of control, no way to uncache parts explicitly
-             - diveintohtml5 pattern doesn't work; no way to expire things
-             - bunfight over cache eviction policies
-            * description of the problems: http://w   ww.alistapart.com/articles/application-cache-is-a-douchebag/
-          * problem with stale data
-          * problem with user-facing private data
-          * wanted the app towork without JS
-          * cached JSON data in localStorage (mustache to render HTML - reason is storing multiple page data)
-            - unreliably connected is *worse* than disconnected
-           • because users are logged in and their data is saved to the cache, if they log out and someone else logs in you get the wrong data. So they include the login as a comment in the manifest to work around that.
-           • We use XHR just so we can show the "Loading" thing
-           • there is no error feedback on fallback pages, and there are quite a few rather different error cases
-           • interesting attack: load the main page with lots of different query strings, cause it to be implicitly cached many, many times
-           • far-future caching of the manifest will lock out updates until the far future happens (Some small number of FT users still locked into an AppCache from July 2011)
-        -->
+    The URL to the mobile Lanyrd website is: [http://m.lanyrd.com](http://m.lanyrd.com). More info on the mobile app is available at [http://lanyrd.com/mobile/](http://lanyrd.com/mobile/).
+    
+    Lanyrd is a social conference directory which helps users find conferences their friends are attending, see what's currently happening at conferences, build up a speaker profile, and catch up on past conference coverage. It also helps conference organizer promote their conferences and gather analytics on conference attendees.
+    
+    The mobile version of Lanyrd is designed to be used while attending a conference. Because poor network connectivity is the norm at conferences, it allows users to save specific content before attending the conference for offline use. It relies on AppCache to provide this functionality.
+    
+    Mobile Lanyrd uses a separate subdomain as its feature set is different.
+    
+    <!--
+      TODO Jake to writeup Lanyrd case study
+    -->
+    
+    <!--
+    * separate domain
+        * not a retrofit, would have required a re-write anyway
+        * want to provide a subset of overall content, scored by users a-priori
+        * can't put a manifest on every page - lack of control, no way to uncache parts explicitly
+         - diveintohtml5 pattern doesn't work; no way to expire things
+         - bunfight over cache eviction policies
+        * description of the problems: http://w   ww.alistapart.com/articles/application-cache-is-a-douchebag/
+      * problem with stale data
+      * problem with user-facing private data
+      * wanted the app towork without JS
+      * cached JSON data in localStorage (mustache to render HTML - reason is storing multiple page data)
+        - unreliably connected is *worse* than disconnected
+       • because users are logged in and their data is saved to the cache, if they log out and someone else logs in you get the wrong data. So they include the login as a comment in the manifest to work around that.
+       • We use XHR just so we can show the "Loading" thing
+       • there is no error feedback on fallback pages, and there are quite a few rather different error cases
+       • interesting attack: load the main page with lots of different query strings, cause it to be implicitly cached many, many times
+       • far-future caching of the manifest will lock out updates until the far future happens (Some small number of FT users still locked into an AppCache from July 2011)
+    -->
 
-        <section id="mobile-lanyrd-manifest">
-          <h3>Example AppCache manifest file</h3>
-          <div data-include="./manifests/lanyrd.appcache" data-oninclude="codeBlock"></div>
-          <p>Notable:</p>
-          <ul>
-            <li>the comment string which combines version number and user ID,</li>
-            <li>the fallback <code>/ /</code> hack which makes every URL fallback to the root page <em>after</em> an attempt was made to retrieve fresh data from the network.</li>
-          </ul>
-        </section>
+    <section id="mobile-lanyrd-manifest">
+    ### Example AppCache manifest file
+    
+    <div data-include="./manifests/lanyrd.appcache" data-oninclude="codeBlock"></div>
+    
+    Notable:
+    
+    * the comment string which combines version number and user ID,
+    * the fallback `/ /` hack which makes every URL fallback to the root page _after_ an attempt was made to retrieve fresh data from the network.
+    </section>
 
-        <section id="mobile-lanyrd-references">
-          <h3>References</h3>
-          <ul>
-            <li>Jake Archibald, <a href="http://www.alistapart.com/articles/application-cache-is-a-douchebag/">Application Cache is a Douchebag</a>, A List Apart, <!--
-              TODO Add pub date
-            -->.</li>
-            <li><!--
-              TODO Jake to add link to slides
-            --></li>
-            <li><!--
-              TODO Jake to add link to mobile lanyrd flowchart
-            --></li>
-          </ul>
-        </section>
-      </section><!-- END Mobile Lanyrd -->
+    <section id="mobile-lanyrd-references">
+    ### References
+    
+    * Jake Archibald, [Application Cache is a Douchebag](http://www.alistapart.com/articles/application-cache-is-a-douchebag/), A List Apart, Issue 350, 8 May 2012.
+    * "AppCache: Douchebag", [slides](https://speakerdeck.com/jaffathecake/application-cache-douchebag) and [video](http://blip.tv/jsconf/jsconf2012-jake-archibald-appcache-douchebag-6143723) of a talk by Jake Archibald at [JSConf US 2012](http://2012.jsconf.us/).
+    * A [flow chart](http://dl.dropbox.com/u/2501978/appcache-diagram.svg), also by Jake Archibald.
+    </section>
+    
+    
+    The Economist on PlayBook
+    -------------------------
+    
+    The Economist HTML5 app is currently only available from [BlackBerry App World](http://appworld.blackberry.com/webstore/content/117808) as a PlayBook app running under BlackBerry WebWorks (for the distribution channel, presence on home screen, removal of browser chrome), but since it does not use any of the WebWorks APIs, it does not rely on the WebWorks environment and can be viewed in a browser. Currently it requires JavaScript but only for layout assistance - if support for a fallback layout using only CSS were added, the app would work without JavaScript, and that remains a longer term aim. The app has the capability to render content server side and deliver combined content+structure responses partly in support of that goal, also partly for performance, and finally to enable crawler support.
 
+    Building the app took advantage of lessons learned from the first generation of the FT web app. Some of the challenges and experiences in building the Economist app are discussed in the FT Labs blog posts listed in <a href="#the-economist-references" class="sectionRef"></a>.</p>
+    
+    <!--
+        TODO Tobie to copy paste content from wiki
+      -->
+    
+    <!--
+       * the result of lessons learned from the FT app
+        * no manifest when uesrs aren't signed in
+        * offline is an explicit uesr choice (users are prompted)
+        * manifest is populated via an iframe, the same as Lanyrd
+        * upon user permission, download all current edition to WebSQL/IndexedDB
+        • we don't know how much space there is in appcache, and realistically we find that it usually is not enough for our needs
+      * storing images as encoded strings in the db.
+      * batching requests for pages. Pages are atomic, JSON data that contain the text content + the encoded images.
+      * playbook app gone through the app world
+       * economist has a native affordance, app store distribution
+       * FT only run through web UI, but prompts users to add a web shortcut
+         - shortcut is the preferred method for Lanyrd too
+       * neither FT nor Lanyrd is mobile-only for this stuff, but is mobile-first
+      * on desktop, one of the important use cases is to pre-fetch content.
+       * individual issues tend not to change
+         - eviction is handled through LocalStorage/etc., not through AppCache, and is LRU based on issues
+       * All the JS is in LocalStorage
+       • on startup, a heartbeat is sent to the server with last modificatin times of the resources in local storage
+         - server responds with information about what to update (and the priority of the update) based on compat with currently bootstrapped host code
+      * very long session times (sometimes weeks)
+       * everyone is using window.name to hold invalidation/last-boot information in order to avoid reload loops and to force refreshes when the appcache has old templates vs. incompatible data
+        * two fallbacks: /api and /issues, both  are needed to make JS apis work gracefully when things aren't working
+      * want to support content + struc in the same response for performance reasons, crawlers, etc.
+      * deliver content within the structure first (data inlcuded in HTML markup) then bootstap the JS ("appify"). 
+       * origin segmentation is a huge issue. Everyone is checksumming in order to invalidate based on user of the app (different logins in the same browser/session)
+      
+    -->
+    <section id="the-economist-manifest">
+    ### Example AppCache manifest file
+    
+    <div data-include="./manifests/the-economist.appcache" data-oninclude="codeBlock"></div>
+    
+    Notable:
+    
+    * there is no JavaScript cached in AppCache, all JavaScript is stored in localStorage.
+    
+    </section>
+    <section id="the-economist-references">
+    ### References
+    
+    See <a href="#ft-app-references" class="sectionRef"></a>.
+    </section>
+    <!-- END The Economist on PlayBook -->
 
-      <section>
-        <h2>The Economist on PlayBook</h2>
+    Mobile Facebook
+    ---------------
 
-        <p>The Economist HTML5 app is currently only available from <a href="http://appworld.blackberry.com/webstore/content/117808">BlackBerry App World</a> as a PlayBook app running under BlackBerry WebWorks (for the distribution channel, presence on home screen, removal of browser chrome), but since it does not use any of the WebWorks APIs, it does not rely on the WebWorks environment and can be viewed in a browser. Currently it requires JavaScript but only for layout assistance - if support for a fallback layout using only CSS were added, the app would work without JavaScript, and that remains a longer term aim. The app has the capability to render content server side and deliver combined content+structure responses partly in support of that goal, also partly for performance, and finally to enable crawler support.</p>
+    The URL to the mobile Facebook website is: [https://m.facebook.com](https://m.facebook.com).
 
-        <p>Building the app took advantage of lessons learned from the first generation of the FT web app. Some of the challenges and experiences in building the Economist app are discussed in the FT Labs blog posts listed in <a href="#the-economist-references" class="sectionRef"></a>.</p>
-
-        <!--
-            TODO Tobie to copy paste content from wiki
-          -->
-        
-        <!--
-           * the result of lessons learned from the FT app
-            * no manifest when uesrs aren't signed in
-            * offline is an explicit uesr choice (users are prompted)
-            * manifest is populated via an iframe, the same as Lanyrd
-            * upon user permission, download all current edition to WebSQL/IndexedDB
-            • we don't know how much space there is in appcache, and realistically we find that it usually is not enough for our needs
-          * storing images as encoded strings in the db.
-          * batching requests for pages. Pages are atomic, JSON data that contain the text content + the encoded images.
-          * playbook app gone through the app world
-           * economist has a native affordance, app store distribution
-           * FT only run through web UI, but prompts users to add a web shortcut
-             - shortcut is the preferred method for Lanyrd too
-           * neither FT nor Lanyrd is mobile-only for this stuff, but is mobile-first
-          * on desktop, one of the important use cases is to pre-fetch content.
-           * individual issues tend not to change
-             - eviction is handled through LocalStorage/etc., not through AppCache, and is LRU based on issues
-           * All the JS is in LocalStorage
-           • on startup, a heartbeat is sent to the server with last modificatin times of the resources in local storage
-             - server responds with information about what to update (and the priority of the update) based on compat with currently bootstrapped host code
-          * very long session times (sometimes weeks)
-           * everyone is using window.name to hold invalidation/last-boot information in order to avoid reload loops and to force refreshes when the appcache has old templates vs. incompatible data
-            * two fallbacks: /api and /issues, both  are needed to make JS apis work gracefully when things aren't working
-          * want to support content + struc in the same response for performance reasons, crawlers, etc.
-          * deliver content within the structure first (data inlcuded in HTML markup) then bootstap the JS ("appify"). 
-           * origin segmentation is a huge issue. Everyone is checksumming in order to invalidate based on user of the app (different logins in the same browser/session)
-          
-        -->
-        <section id="the-economist-manifest">
-          <h3>Example AppCache manifest file</h3>
-          <div data-include="./manifests/the-economist.appcache" data-oninclude="codeBlock"></div>
-          <p>Notable:</p>
-          <ul>
-            <li>there is no JavaScript cached in AppCache, all JavaScript is stored in localStorage.</li>
-          </ul>
-        </section>
-
-        <section id="the-economist-references">
-          <h3>References</h3>
-          <p>See <a href="#ft-app-references" class="sectionRef"></a>.</p>
-        </section>
-      </section><!-- END The Economist on PlayBook -->
-
-      <section>
-        <h2>Mobile Facebook</h2>
-
-        <p>The URL to the mobile Facebook website is: <a href="https://m.facebook.com">https://m.facebook.com</a>.</p>
-
-        <p>Facebook experimented with using AppCache on its mobile website to improve performance by aggressively caching static assets in the face of limited HTTP cache support in mobile browsers, more specifically that of early iOS devices. This experiment was stopped in December 2011 as the results weren't showing significant performance improvements and added a lot of complexity. Because Facebook relies on a probabilistic packaging system to bundle resources, cached content gets invalidated on each push. Since pushes happen daily, AppCache ended up burning through too much network resources to be useful.</p>
-        
-        <p></p>
-        
-        <!--
-           * current infrastructure has oone giant branch system, no differentiation based on clinet capability in terms of overall architecture
-           * 2011 Appcache testing - facebook is mainly content 
-           * caching static resources via AppCache
-           * push a lot, many invalidations, pre-fetching punishes demand-loading of content
-           * history API via a controller that owns the app state
-             - JS for page is serialized in sequence and replayed when view is returned to
-           * always signed in (no way to cache the whole thing), never offline
-           * appcache for perf *only*
-           * would strongly prefer a "page state snapshotting" system
-             - don't have a strong idea for how the controller would interact with this
-           * NO LONGER USING APPCACHE
-             - stopped in Dec
-             - burned through too many network resources to be useful
-             - probabilistic resource packaging means that all content is invalidated on each push
-           * changing their appraoch, looking to be more in-line with AppCache's current strenghts
-             - will go to a more app-like style, which will help
-             - progressive enhancement to the Nth degree is untennable at some size
-             - spreading a codebase too wide hurts both high and low-end experiences
-           * concern that relying on HTTP for *SOME* things, *PART* of the time makes the whole system extremely difficult to reason about (see: no store headers and master entries vs. other items)
-           * big apps hit the "manifests hosted on diffrent servers from data and load-balancer's f you" and invalidating everything is the only way to go because you can't do temp responses (because spec doesn't want to be hostage to captive portals)
-             - manifest on Server 1, downloads master entry (which can't be fingerprinted)
-             - resources are on a CDN and are all fingerprinted
-             ... much quibbling over what spec actually says about 2-phase update...
-             ... some discussion of overlapping resource requests in disjoint manifests from the same domain ...
-          NOBODY UNDERSTANDS THE MANIFEST SELECTION ALGORITHM
-
-          ... correction... 
-
-          WE HAVE NO MENTAL MODEL FOR APPCACHE, and as a group are relatively convinced that nobody else does either.
+    Facebook experimented with using AppCache on its mobile website to improve performance by aggressively caching static assets in the face of limited HTTP cache support in mobile browsers, more specifically that of early iOS devices. This experiment was stopped in December 2011 as the results weren't showing significant performance improvements and added a lot of complexity. Because Facebook relies on a probabilistic packaging system to bundle resources, cached content gets invalidated on each push. Since pushes happen daily, AppCache ended up burning through too much network resources to be useful.
+    
+    <!--
+     * current infrastructure has oone giant branch system, no differentiation based on clinet capability in terms of overall architecture
+     * 2011 Appcache testing - facebook is mainly content 
+     * caching static resources via AppCache
+     * push a lot, many invalidations, pre-fetching punishes demand-loading of content
+     * history API via a controller that owns the app state
+       - JS for page is serialized in sequence and replayed when view is returned to
+     * always signed in (no way to cache the whole thing), never offline
+     * appcache for perf *only*
+     * would strongly prefer a "page state snapshotting" system
+       - don't have a strong idea for how the controller would interact with this
+     * NO LONGER USING APPCACHE
+       - stopped in Dec
+       - burned through too many network resources to be useful
+       - probabilistic resource packaging means that all content is invalidated on each push
+     * changing their appraoch, looking to be more in-line with AppCache's current strenghts
+       - will go to a more app-like style, which will help
+       - progressive enhancement to the Nth degree is untennable at some size
+       - spreading a codebase too wide hurts both high and low-end experiences
+     * concern that relying on HTTP for *SOME* things, *PART* of the time makes the whole system extremely difficult to reason about (see: no store headers and master entries vs. other items)
+     * big apps hit the "manifests hosted on diffrent servers from data and load-balancer's f you" and invalidating everything is the only way to go because you can't do temp responses (because spec doesn't want to be hostage to captive portals)
+       - manifest on Server 1, downloads master entry (which can't be fingerprinted)
+       - resources are on a CDN and are all fingerprinted
+       ... much quibbling over what spec actually says about 2-phase update...
+       ... some discussion of overlapping resource requests in disjoint manifests from the same domain ...
+    NOBODY UNDERSTANDS THE MANIFEST SELECTION ALGORITHM
+    
+    ... correction... 
+    
+    WE HAVE NO MENTAL MODEL FOR APPCACHE, and as a group are relatively convinced that nobody else does either.
         -->
 
-        <section id="mobile-fb-references">
-          <h3>References</h3>
-          <ul>
-            <li><!--
-              TODO Tobie to add link to Appcache article
-            --></li>
-            <li><!--
-              TODO Tobie to add link to use cases post previously published
-            --></li>
-          </ul>
-        </section>
-      </section><!-- END Mobile Facebook -->
-
-
-      <section>
-        <h2>Mobile GMail</h2>
-
-        <p>The URL to Mobile GMail is: <a href="https://m.gmail.com">https://m.gmail.com</a>.</p>
-
-        <p>GMail has very little public data - almost everything is user specific. The site is always served over SSL. There are many different versions of GMail for different platforms and client capabilities. Variation is mostly done server side. Gears <!--
-          TODO Add link to GEARS
-        --> was designed to make GMail work offline, and consequently Google has been keen to get the main features of Gears into HTML5. Offline use is only supported on the most modern browsers, where app cache is used to store the 'shell' of the application, though not the application code. Like the Economist app, the main app code is stored in localStorage. The code is initially delivered as comments inside the HTML document, so it only need be parsed when actually required. Performance targets are time to inbox and time to first message, so being able to parse and/or update only specific code is important. AppCache contains just a fallback for bootstrapping the app while offline.</p>
-
-        <p>Every view of GMail is a search, the most common and default one being a search that produces what the UI refers to as the inbox (the inbox exists in practice only in the sense that some messages are tagged with an inbox tag so that they can be found by that search)</p>
-        
-        <!--
-          * All data in gmail is private, no public data
-           * All served over SSL
-           * Multiple versions of the app for different platform / client capabilities
-           * Offline only supported on most modern browsers
-           * Heavy client side data model
-           * Every view is a search
-           * Gears was designed to make GMail work offline
-           * App Cache stores the 'shell' of the application
-           * Main app code mainly sits in localStorage (though it is initially delivered to browser in an HTML comment)
-           * Time to view inbox, time to view message - key performance targets
-           * App cache contains just a fallback / master for bootstrap - effectively just a single resource
-          
+    <section id="mobile-fb-references">
+    ### References
+    
+    * <!--
+          TODO Tobie to add link to Appcache article
         -->
-
-        <section id="mobile-gmail-manifest">
-          <h3>Example AppCache manifest file</h3>
-          <div data-include="./manifests/gmail.appcache" data-oninclude="codeBlock"></div>
-          <p>Notable:</p>
-          <ul>
-            <li>AppCache is used strictly to cache the master entry, which contains all the bootstrapping code, inlined.</li>
-            <li>Unclear why the <code>section</code> contains anything but <code>*</code>. Is this to take advantage of undocumented features of Chromium or is it by accident?</li>
-          </ul>
-        </section>
-
-        <section id="mobile-gmail-references">
-          <h3>References</h3>
-          <ul>
-            <li><!--
-              TODO Add links to mobile gmail articles
-            --></li>
-          </ul>
-        </section>
-      </section><!-- END Mobile GMail-->
-
-
-      <section>
-        <h2>The Financial Times Web Application</h2>
-
-        <!--
-          * Single page app, (currently) uses hash-bang URLs.
-          * As a result, explicitly caches root URL and depends on user only visiting that one URL
-          * Otherwise much as described in Lanyrd and Economist case studies below.
+    * <!--
+          TODO Tobie to add link to use cases post previously published
         -->
+    
+    </section>
 
-        <section id="ft-app-manifest">
-          <h3>Example AppCache manifest file</h3>
-          <div data-include="./manifests/ft.appcache" data-oninclude="codeBlock"></div>
-          <p>Notable:</p>
-          <ul>
-            <li></li>
-          </ul>
-        </section>
+    Mobile GMail
+    ------------
+    
+    The URL to Mobile GMail is: [https://m.gmail.com](https://m.gmail.com).
+    
+    GMail has very little public data - almost everything is user specific. The site is always served over SSL. There are many different versions of GMail for different platforms and client capabilities. Variation is mostly done server side. [Gears](http://web.archive.org/web/20090301014918/http://code.google.com/apis/gears/) was designed to make GMail work offline, and consequently Google has been keen to get the main features of Gears into HTML5. Offline use is only supported on the most modern browsers, where app cache is used to store the 'shell' of the application, though not the application code. Like the Economist app, the main app code is stored in localStorage. The code is initially delivered as comments inside the HTML document, so it only need be parsed when actually required. Performance targets are time to inbox and time to first message, so being able to parse and/or update only specific code is important. AppCache contains just a fallback for bootstrapping the app while offline.
 
-        <section id="ft-app-references">
-          <h3>References</h3>
-          <ul>
-            <li><!--
-              TODO Add author
-            -->, <a href="http://labs.ft.com/2012/08/navigator-online-here-be-dragons/">Navigator.onLine: Here be dragons</a>, FT Labs blog, <!--
-              TODO Add pub date
-            -->.</li>
-            <li><!--
-              TODO Add author
-            -->, <a href="http://labs.ft.com/2012/08/basic-offline-html5-web-app/">Tutorial: How to make an offline HTML5 web app, FT style</a>, FT Labs blog, <!--
-              TODO Add pub date
-            -->.</li>
-            <li><!--
-              TODO Add author
-            -->, <a href="http://labs.ft.com/2012/07/prefer-online-not-so-much/">Prefer-online? Not so much</a>, FT Labs blog,<!--
-              TODO Add pub date
-            -->.</li>
-          </ul>
-        </section>
-      </section><!-- END The Financial Times App -->
+    Every view of GMail is a search, the most common and default one being a search that produces what the UI refers to as the inbox (the inbox exists in practice only in the sense that some messages are tagged with an inbox tag so that they can be found by that search)
+    
+    
+    <!--
+      * All data in gmail is private, no public data
+       * All served over SSL
+       * Multiple versions of the app for different platform / client capabilities
+       * Offline only supported on most modern browsers
+       * Heavy client side data model
+       * Every view is a search
+       * Gears was designed to make GMail work offline
+       * App Cache stores the 'shell' of the application
+       * Main app code mainly sits in localStorage (though it is initially delivered to browser in an HTML comment)
+       * Time to view inbox, time to view message - key performance targets
+       * App cache contains just a fallback / master for bootstrap - effectively just a single resource
+      
+    -->
+    
+    <section id="mobile-gmail-manifest">
+    ### Example AppCache manifest file
+    
+    <div data-include="./manifests/gmail.appcache" data-oninclude="codeBlock"></div>
+    
+    Notable:
+    
+    * AppCache is used strictly to cache the master entry, which contains all the bootstrapping code, inlined.
+    * Unclear why the `NETWORK` section contains anything other than `*`. Is this to take advantage of undocumented features of Chromium or is it by accident?
+    
+    </section>
+    
+    <section id="mobile-gmail-references">
+    ### References
+    * <!--
+          TODO Add links to mobile gmail articles
+        -->
+    </section>
+
+    The Financial Times Web Application
+    -----------------------------------
+    <!--
+      * Single page app, (currently) uses hash-bang URLs.
+      * As a result, explicitly caches root URL and depends on user only visiting that one URL
+      * Otherwise much as described in Lanyrd and Economist case studies below.
+    -->
+
+    <section id="ft-app-manifest">
+    ### Example AppCache manifest file
+    
+    <div data-include="./manifests/ft.appcache" data-oninclude="codeBlock"></div>
+    
+    Notable:
+    
+    *
+    
+    </section>
+
+    <section id="ft-app-references">
+    ### References
+    
+    * Andrew Betts, [Navigator.onLine: Here be dragons](http://labs.ft.com/2012/08/navigator-online-here-be-dragons/), FT Labs blog, 13 August 2012.
+    * Matt Andrews, [Tutorial: How to make an offline HTML5 web app, FT style](http://labs.ft.com/2012/08/basic-offline-html5-web-app/), FT Labs blog, 1 August 2012.
+    * Andrew Betts, [Prefer-online? Not so much](http://labs.ft.com/2012/07/prefer-online-not-so-much/), FT Labs blog, 17 July 2012.
     </section>
   </body>
 </html>
